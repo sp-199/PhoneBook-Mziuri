@@ -70,8 +70,8 @@ public class Main extends Application {
             }
         });
 
-        VBox vbox = new VBox(nameLabel, nameField, lastnameLabel, lastnameField, phoneLabel, phoneField, emailLabel, emailField, saveButton);
-        Scene scene = new Scene(vbox, 300, 200);
+        VBox vboxAdd = new VBox(nameLabel, nameField, lastnameLabel, lastnameField, phoneLabel, phoneField, emailLabel, emailField, saveButton);
+        Scene scene = new Scene(vboxAdd, 300, 200);
         addStage.setScene(scene);
         addStage.show();
     }
@@ -80,23 +80,32 @@ public class Main extends Application {
     private void showRemoveContactWindow() {
         Stage removeStage = new Stage();
         removeStage.setTitle("Remove Contact");
-        VBox vbox = new VBox(new Button("Remove Contact"));
-        Label removelabel=new Label("Enter the name and the surname of contact you want to remove");
+        if(contacts.isEmpty()){
+            VBox vboxRemove=new VBox(new Label("Your Phone book is empty!"));
+            Scene scene = new Scene(vboxRemove, 300, 200);
+            removeStage.setScene(scene);
+        }else {
+            Label removelabel = new Label("Enter the name and the surname of contact you want to remove");
 
-        Label nameLabel = new Label("Name:");
-        TextField nameField = new TextField();
+            Label nameLabel = new Label("Name:");
+            TextField nameField = new TextField();
 
-        Label lastnameLabel = new Label("Lastname:");
-        TextField lastnameField = new TextField();
+            Label lastnameLabel = new Label("Lastname:");
+            TextField lastnameField = new TextField();
 
-        for(PhoneContact contact:contacts){
-            if(nameField.getText().equals(contact.getName()) && lastnameField.getText().equals(contact.getLastName())){
-                contacts.remove(contact);
-            }
+            Button removeButton = new Button("Remove");
+            removeButton.setOnAction(event -> {
+                for (PhoneContact contact : contacts) {
+                    if (nameField.getText().equals(contact.getName()) && lastnameField.getText().equals(contact.getLastName())) {
+                        contacts.remove(contact);
+                        removeStage.close();
+                    }
+                }
+            });
+            VBox vboxRemove = new VBox(removelabel, nameLabel, nameField, lastnameLabel, lastnameField, removeButton);
+            Scene scene = new Scene(vboxRemove, 300, 200);
+            removeStage.setScene(scene);
         }
-
-        Scene scene = new Scene(vbox, 300, 200);
-        removeStage.setScene(scene);
         removeStage.show();
     }
 
@@ -112,13 +121,17 @@ public class Main extends Application {
     private void showDisplayContactsWindow() {
         Stage displayStage = new Stage();
         displayStage.setTitle("Display Contacts");
-        VBox vbox = new VBox();
-        int index=0;
-        for (PhoneContact contact : contacts) {
-            index++;
-            vbox.getChildren().add(new Label("N"+index+")\n" +contact.displayContact()+"\n"));
+        VBox vboxdisplay = new VBox();
+        if(contacts.isEmpty()){
+            vboxdisplay.getChildren().add(new Label("Your Phonebook is Empty!"));
+        }else {
+            int index = 0;
+            for (PhoneContact contact : contacts) {
+                index++;
+                vboxdisplay.getChildren().add(new Label("N" + index + ")\n" + contact.displayContact() + "\n"));
+            }
         }
-        Scene scene = new Scene(vbox, 300, 200);
+        Scene scene = new Scene(vboxdisplay, 300, 200);
         displayStage.setScene(scene);
         displayStage.show();
     }
