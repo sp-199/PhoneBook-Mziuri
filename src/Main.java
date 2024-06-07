@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -81,7 +82,11 @@ public class Main extends Application {
         Stage removeStage = new Stage();
         removeStage.setTitle("Remove Contact");
         if(contacts.isEmpty()){
-            VBox vboxRemove=new VBox(new Label("Your Phone book is empty!"));
+            Button okayButton=new Button("Okay");
+            okayButton.setOnAction(event -> {
+                removeStage.close();
+            });
+            VBox vboxRemove=new VBox(new Label("Your Phone book is empty!"), okayButton);
             Scene scene = new Scene(vboxRemove, 300, 200);
             removeStage.setScene(scene);
         }else {
@@ -112,24 +117,114 @@ public class Main extends Application {
     private void showEditContactWindow() {
         Stage editStage = new Stage();
         editStage.setTitle("Edit Contact");
-        VBox vbox = new VBox(new Button("Edit Contact"));
-        Scene scene = new Scene(vbox, 300, 200);
+        Label editLabel=new Label("Which contact do you want to edit?");
+        Label nameLabel = new Label("Enter the name:");
+        TextField nameField= new TextField();
+        Label surnameLabel = new Label("Enter the surname:");
+        TextField surnameField= new TextField();
+        Button enterButton=new Button("Enter");
+        enterButton.setOnAction(event->{
+            for(PhoneContact contact: contacts){
+                if (nameField.getText().equals(contact.getName()) && surnameField.getText().equals(contact.getLastName())) {
+                    Stage editStage2=new Stage();
+                    Label question=new Label("What do you want to edit?\n");
+                    Button opt1=new Button("Name");
+                    Button opt2=new Button("Surname");
+                    Button opt3=new Button("Phone Number");
+                    Button opt4=new Button("Email");
+                    Button opt5=new Button("Done");
+                    opt1.setOnAction(event1 ->{
+                        Stage nameStage=new Stage();
+                        Label namelabel1=new Label("Enter new Name:");
+                        TextField nameField1=new TextField();
+                        Button updateButton=new Button("Update");
+                        updateButton.setOnAction(event2->{
+                            contact.setName(nameField1.getText());
+                            nameStage.close();
+                        });
+                        VBox vboxname = new VBox(namelabel1,nameField1,updateButton);
+                        Scene nameScene = new Scene(vboxname, 300, 200);
+                        nameStage.setScene(nameScene);
+                        nameStage.show();
+                    });
+                    opt2.setOnAction(event1 ->{
+                        Stage surnameStage=new Stage();
+                        Label surnamelabel1=new Label("Enter new Surname:");
+                        TextField surnameField1=new TextField();
+                        Button updateButton=new Button("Update");
+                        updateButton.setOnAction(event2->{
+                            contact.setLastName(surnameField1.getText());
+                            surnameStage.close();
+                        });
+                        VBox vboxsurname = new VBox(surnamelabel1,surnameField1,updateButton);
+                        Scene surnameScene = new Scene(vboxsurname, 300, 200);
+                        surnameStage.setScene(surnameScene);
+                        surnameStage.show();
+                    });
+                    opt3.setOnAction(event1 ->{
+                        Stage phonenumberStage=new Stage();
+                        Label phonenumberlabel1=new Label("Enter new Phone Number:");
+                        TextField phonenumberField1=new TextField();
+                        Button updateButton=new Button("Update");
+                        updateButton.setOnAction(event2->{
+                            contact.setNumber(phonenumberField1.getText());
+                            phonenumberStage.close();
+                        });
+                        VBox vboxphonenumber = new VBox(phonenumberlabel1,phonenumberField1,updateButton);
+                        Scene phonenumberScene = new Scene(vboxphonenumber, 300, 200);
+                        phonenumberStage.setScene(phonenumberScene);
+                        phonenumberStage.show();
+                    });
+                    opt4.setOnAction(event1 ->{
+                        Stage emailStage=new Stage();
+                        Label emaillabel1=new Label("Enter new Email:");
+                        TextField emailField1=new TextField();
+                        Button updateButton=new Button("Update");
+                        updateButton.setOnAction(event2->{
+                            contact.setEmail(emailField1.getText());
+                            emailStage.close();
+                        });
+                        VBox vboxemail = new VBox(emaillabel1,emailField1,updateButton);
+                        Scene emailScene = new Scene(vboxemail, 300, 200);
+                        emailStage.setScene(emailScene);
+                        emailStage.show();
+                    });
+                    opt5.setOnAction(event1->{
+                        editStage2.close();
+                    });
+                    VBox vboxedit2 = new VBox(question,opt1,opt2,opt3,opt4,opt5);
+                    Scene scene2 = new Scene(vboxedit2, 300, 200);
+                    editStage2.setScene(scene2);
+                    editStage2.show();
+                }
+            }
+            editStage.close();
+        });
+        VBox vboxedit = new VBox(editLabel,nameLabel,nameField,surnameLabel,surnameField, enterButton);
+        Scene scene = new Scene(vboxedit, 300, 200);
         editStage.setScene(scene);
         editStage.show();
+
     }
 
     private void showDisplayContactsWindow() {
         Stage displayStage = new Stage();
         displayStage.setTitle("Display Contacts");
         VBox vboxdisplay = new VBox();
+        Button okayButton=new Button("Okay");
+        okayButton.setOnAction(event -> {
+            displayStage.close();
+        });
         if(contacts.isEmpty()){
             vboxdisplay.getChildren().add(new Label("Your Phonebook is Empty!"));
+            vboxdisplay.getChildren().add(okayButton);
         }else {
             int index = 0;
             for (PhoneContact contact : contacts) {
                 index++;
                 vboxdisplay.getChildren().add(new Label("N" + index + ")\n" + contact.displayContact() + "\n"));
             }
+            vboxdisplay.getChildren().add(okayButton);
         }
         Scene scene = new Scene(vboxdisplay, 300, 200);
         displayStage.setScene(scene);
