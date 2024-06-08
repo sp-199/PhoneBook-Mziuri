@@ -271,17 +271,15 @@ public class Main extends Application {
                             nameBox1.setAlignment(Pos.CENTER);
 
                             Button updateButton = new Button("Update");
-                            if(!nameField1.getText().isEmpty()){
-                                updateButton.setOnAction(event2 -> {
-                                    contact.setName(nameField1.getText());
-                                    try {
-                                        userDAO.updateContactName(contact.getNumber(), nameField1.getText());
-                                    } catch (SQLException e) {
-                                        System.out.println("SOMETHING WENT WRONG!");
-                                    }
+                            updateButton.setOnAction(event2 -> {
+                                contact.setName(nameField1.getText());
+                                try {
+                                    userDAO.updateContactName(contact.getNumber(), nameField1.getText());
+                                } catch (SQLException e) {
+                                    System.out.println("SOMETHING WENT WRONG!");
+                                }
                                     nameStage.close();
-                                });
-                            }
+                            });
                             updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
                             updateButton.setOnMouseEntered(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                             updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
@@ -303,17 +301,15 @@ public class Main extends Application {
                             HBox surnameBox1=new HBox(5, surnamelabel1, surnameField1);
                             surnameBox1.setAlignment(Pos.CENTER);
                             Button updateButton = new Button("Update");
-                            if(!surnameField1.getText().isEmpty()){
-                                updateButton.setOnAction(event2 -> {
-                                    contact.setLastName(surnameField1.getText());
-                                    try {
-                                        userDAO.updateContactLastName(contact.getNumber(), surnameField1.getText());
-                                    } catch (SQLException e) {
-                                        System.out.println("SOMETHING WENT WRONG!");
-                                    }
-                                    surnameStage.close();
-                                });
-                            }
+                            updateButton.setOnAction(event2 -> {
+                                contact.setLastName(surnameField1.getText());
+                                try {
+                                    userDAO.updateContactLastName(contact.getNumber(), surnameField1.getText());
+                                } catch (SQLException e) {
+                                    System.out.println("SOMETHING WENT WRONG!");
+                                }
+                                surnameStage.close();
+                            });
                             updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
                             updateButton.setOnMouseEntered(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                             updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
@@ -335,12 +331,10 @@ public class Main extends Application {
                             HBox phonenumberBox1=new HBox(5, phonenumberlabel1, phonenumberField1);
                             phonenumberBox1.setAlignment(Pos.CENTER);
                             Button updateButton = new Button("Update");
-                            if(!phonenumberField1.getText().isEmpty()){
-                                updateButton.setOnAction(event2 -> {
-                                    contact.setNumber(phonenumberField1.getText());
-                                    phonenumberStage.close();
-                                });
-                            }
+                            updateButton.setOnAction(event2 -> {
+                                contact.setNumber(phonenumberField1.getText());
+                                phonenumberStage.close();
+                            });
                             updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
                             updateButton.setOnMouseEntered(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                             updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
@@ -362,17 +356,15 @@ public class Main extends Application {
                             HBox emailBox1=new HBox(5, emaillabel1, emailField1);
                             emailBox1.setAlignment(Pos.CENTER);
                             Button updateButton = new Button("Update");
-                            if(!emailField1.getText().isEmpty()){
-                                updateButton.setOnAction(event2 -> {
-                                    contact.setEmail(emailField1.getText());
-                                    try {
-                                        userDAO.updateContactEmail(contact.getNumber(), emailField1.getText());
-                                    } catch (SQLException e) {
-                                        System.out.println("SOMETHING WENT WRONG!");
-                                    }
-                                    emailStage.close();
-                                });
-                            }
+                            updateButton.setOnAction(event2 -> {
+                                contact.setEmail(emailField1.getText());
+                                try {
+                                    userDAO.updateContactEmail(contact.getNumber(), emailField1.getText());
+                                } catch (SQLException e) {
+                                    System.out.println("SOMETHING WENT WRONG!");
+                                }
+                                emailStage.close();
+                            });
                             updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
                             updateButton.setOnMouseEntered(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                             updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
