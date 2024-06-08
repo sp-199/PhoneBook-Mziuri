@@ -1,13 +1,17 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +25,12 @@ public class Main extends Application {
     ArrayList<PhoneContact> contacts=new ArrayList<>();
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Contact Manager");
-
-        Button addButton = new Button("1. Add New Contact");
-        Button removeButton = new Button("2. Remove Contact");
-        Button editButton = new Button("3. Edit Contact");
-        Button displayButton = new Button("4. Display Contacts");
-        Button exitButton = new Button("5. Exit");
+        primaryStage.setTitle("PhoneBook");
+        Button addButton = new Button("Add New Contact");
+        Button removeButton = new Button("Remove Contact");
+        Button editButton = new Button("Edit Contact");
+        Button displayButton = new Button("Display Contacts");
+        Button exitButton = new Button("Exit");
 
         addButton.setOnAction(event -> showAddContactWindow());
         removeButton.setOnAction(event -> showRemoveContactWindow());
@@ -35,10 +38,27 @@ public class Main extends Application {
         displayButton.setOnAction(event -> showDisplayContactsWindow());
         exitButton.setOnAction(event -> primaryStage.close());
 
-        VBox vbox = new VBox();
-        vbox.getChildren().addAll(addButton, removeButton, editButton, displayButton, exitButton);
+        addButton.setStyle("-fx-background-color: lightgreen;");
+        addButton.setOnMouseEntered(event->{addButton.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;");});
+        addButton.setOnMouseExited(event->{addButton.setStyle("-fx-background-color: lightgreen;");});
+        removeButton.setStyle("-fx-background-color: red;");
+        removeButton.setOnMouseEntered(event->{removeButton.setStyle("-fx-background-color: darkred; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;");});
+        removeButton.setOnMouseExited(event->{removeButton.setStyle("-fx-background-color: red;");});
+        editButton.setStyle("-fx-background-color: yellow;");
+        editButton.setOnMouseEntered(event->{editButton.setStyle("-fx-background-color: orange; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;");});
+        editButton.setOnMouseExited(event->{editButton.setStyle("-fx-background-color: yellow;");});
+        displayButton.setStyle("-fx-background-color: lightblue;");
+        displayButton.setOnMouseEntered(event->{displayButton.setStyle("-fx-background-color: blue; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;");});
+        displayButton.setOnMouseExited(event->{displayButton.setStyle("-fx-background-color: lightblue;");});
+        exitButton.setStyle("-fx-background-color: grey;");
+        exitButton.setOnMouseEntered(event->exitButton.setStyle("-fx-background-color: darkgrey; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;"));
+        exitButton.setOnMouseExited(event->{exitButton.setStyle("-fx-background-color: grey;");});
 
-        Scene scene = new Scene(vbox, 300, 200);
+        VBox vbox = new VBox(10);
+        vbox.setStyle("-fx-background-color: lightpink; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 18px;");
+        vbox.getChildren().addAll(addButton, removeButton, editButton, displayButton, exitButton);
+        vbox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(vbox, 600,400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -49,17 +69,22 @@ public class Main extends Application {
 
         Label nameLabel = new Label("Name:");
         TextField nameField = new TextField();
+        nameLabel.setStyle("-fx-text-fill: darkgreen; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';");
 
         Label lastnameLabel = new Label("Lastname:");
         TextField lastnameField = new TextField();
+        lastnameLabel.setStyle("-fx-text-fill: darkgreen; -fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold;");
 
         Label phoneLabel = new Label("Phone Number:");
         TextField phoneField = new TextField();
+        phoneLabel.setStyle("-fx-text-fill: darkgreen; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';");
 
         Label emailLabel = new Label("Email:");
         TextField emailField = new TextField();
+        emailLabel.setStyle("-fx-text-fill: darkgreen; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';");
 
         Button saveButton = new Button("Save");
+
         saveButton.setOnAction(event -> {
             String name = nameField.getText();
             String lastname = lastnameField.getText();
@@ -70,9 +95,19 @@ public class Main extends Application {
                 addStage.close();
             }
         });
+        saveButton.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-background-color: green; -fx-text-fill: white;");
+        saveButton.setOnMouseEntered(event->{saveButton.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-background-color: darkgreen; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;");});
+        saveButton.setOnMouseExited(event->{saveButton.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-background-color: green; -fx-text-fill: white;");});
 
-        VBox vboxAdd = new VBox(nameLabel, nameField, lastnameLabel, lastnameField, phoneLabel, phoneField, emailLabel, emailField, saveButton);
-        Scene scene = new Scene(vboxAdd, 300, 200);
+        HBox nameBox = new HBox(5, nameLabel, nameField);
+        HBox lastnameBox = new HBox(5, lastnameLabel, lastnameField);
+        HBox phoneBox = new HBox(5, phoneLabel, phoneField);
+        HBox emailBox=new HBox(5, emailLabel, emailField);
+        VBox vboxAdd=new VBox(10);
+        vboxAdd.getChildren().addAll(nameBox, lastnameBox, phoneBox, emailBox, saveButton);
+        vboxAdd.setStyle("-fx-background-color: lightgreen;");
+        vboxAdd.setAlignment(Pos.CENTER_LEFT);
+        Scene scene = new Scene(vboxAdd, 600, 400);
         addStage.setScene(scene);
         addStage.show();
     }
@@ -86,19 +121,36 @@ public class Main extends Application {
             okayButton.setOnAction(event -> {
                 removeStage.close();
             });
-            VBox vboxRemove=new VBox(new Label("Your Phone book is empty!"), okayButton);
-            Scene scene = new Scene(vboxRemove, 300, 200);
+            okayButton.setStyle("-fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 60px; -fx-pref-height: 15px; -fx-font-size:70px;");
+            okayButton.setOnMouseEntered(event->okayButton.setStyle("-fx-font-size:18px; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-background-color: darkgrey; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;"));
+            okayButton.setOnMouseExited(event->{okayButton.setStyle("-fx-font-size:18px; -fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px;");});
+            Label emptyLabel=new Label("THE PHONEBOOK IS EMPTY!");
+            emptyLabel.setStyle("-fx-text-fill: darkred; -fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 25px;");
+            VBox vboxRemove=new VBox(20);
+            vboxRemove.getChildren().addAll(emptyLabel, okayButton);
+            vboxRemove.setStyle("-fx-background-color: pink;");
+            vboxRemove.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(vboxRemove, 600, 400);
             removeStage.setScene(scene);
         }else {
-            Label removelabel = new Label("Enter the name and the surname of contact you want to remove");
+            Label removelabel = new Label("Enter the Name and the Lastname of the contact you want to Remove");
+            removelabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold; -fx-font-color: darkred; -fx-font-size:17px;");
 
             Label nameLabel = new Label("Name:");
             TextField nameField = new TextField();
+            nameLabel.setStyle("-fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';");
 
             Label lastnameLabel = new Label("Lastname:");
             TextField lastnameField = new TextField();
+            lastnameLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold;");
+
+            HBox nameBox = new HBox(5, nameLabel, nameField);
+            HBox lastnameBox = new HBox(5, lastnameLabel, lastnameField);
 
             Button removeButton = new Button("Remove");
+            removeButton.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-background-color: red; -fx-text-fill: white;");
+            removeButton.setOnMouseEntered(event->{removeButton.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-background-color: darkred; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;");});
+            removeButton.setOnMouseExited(event->{removeButton.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-background-color: red; -fx-text-fill: white;");});
             removeButton.setOnAction(event -> {
                 for (PhoneContact contact : contacts) {
                     if (nameField.getText().equals(contact.getName()) && lastnameField.getText().equals(contact.getLastName())) {
@@ -107,8 +159,11 @@ public class Main extends Application {
                     }
                 }
             });
-            VBox vboxRemove = new VBox(removelabel, nameLabel, nameField, lastnameLabel, lastnameField, removeButton);
-            Scene scene = new Scene(vboxRemove, 300, 200);
+            VBox vboxRemove=new VBox(10);
+            vboxRemove.setAlignment(Pos.CENTER_LEFT);
+            vboxRemove.getChildren().addAll(removelabel, nameBox, lastnameBox, removeButton);
+            vboxRemove.setStyle("-fx-background-color:pink;");
+            Scene scene = new Scene(vboxRemove, 600, 400);
             removeStage.setScene(scene);
         }
         removeStage.show();
@@ -118,36 +173,74 @@ public class Main extends Application {
         Stage editStage = new Stage();
         editStage.setTitle("Edit Contact");
         if(contacts.isEmpty()){
-            Label emptylabel=new Label("The Phonebook is Empty!");
+            Label emptylabel=new Label("THE PHONEBOOK IS EMPTY!");
+            emptylabel.setStyle("-fx-text-fill: darkorange; -fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 25px;");
             Button okayButton=new Button("Okay");
             okayButton.setOnAction(event->{
                 editStage.close();
             });
-            VBox vboxedit=new VBox(emptylabel, okayButton);
-            Scene scene = new Scene(vboxedit, 300, 200);
+            okayButton.setStyle("-fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 60px; -fx-pref-height: 15px; -fx-font-size:70px;");
+            okayButton.setOnMouseEntered(event->okayButton.setStyle("-fx-font-size:18px; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-background-color: darkgrey; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;"));
+            okayButton.setOnMouseExited(event->{okayButton.setStyle("-fx-font-size:18px; -fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px;");});
+            VBox vboxEdit=new VBox(20);
+            vboxEdit.setStyle("-fx-background-color: yellow;");
+            vboxEdit.getChildren().addAll(emptylabel, okayButton);
+            vboxEdit.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(vboxEdit, 600, 400);
             editStage.setScene(scene);
             editStage.show();
         } else {
             Label editLabel = new Label("Which contact do you want to edit?");
+            editLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold; -fx-text-fill: darkorange; -fx-font-size:17px;");
+
             Label nameLabel = new Label("Enter the name:");
             TextField nameField = new TextField();
+            nameLabel.setStyle("-fx-text-fill: darkorange; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS', -fx-font-size:17;");
+
             Label surnameLabel = new Label("Enter the surname:");
             TextField surnameField = new TextField();
+            surnameLabel.setStyle("-fx-text-fill: darkorange; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';-fx-font-size:17;");
+
+            HBox nameBox = new HBox(5, nameLabel, nameField);
+            HBox surnameBox = new HBox(5, surnameLabel, surnameField);
+
             Button enterButton = new Button("Enter");
+            enterButton.setStyle("-fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 60px; -fx-pref-height: 15px; -fx-font-size:17px;");
+            enterButton.setOnMouseEntered(event->enterButton.setStyle("-fx-font-size:17px; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-background-color: darkgrey; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;"));
+            enterButton.setOnMouseExited(event->{enterButton.setStyle("-fx-font-size:17px; -fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px;");});
             enterButton.setOnAction(event -> {
                 for (PhoneContact contact : contacts) {
                     if (nameField.getText().equals(contact.getName()) && surnameField.getText().equals(contact.getLastName())) {
                         Stage editStage2 = new Stage();
                         Label question = new Label("What do you want to edit?\n");
+                        question.setStyle("-fx-font-weight: bold; -fx-font-style:italic; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:18px;");
                         Button opt1 = new Button("Name");
+                        opt1.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                        opt1.setOnMouseEntered(event2->{opt1.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                        opt1.setOnMouseExited(event2->{opt1.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                         Button opt2 = new Button("Surname");
+                        opt2.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                        opt2.setOnMouseEntered(event2->{opt2.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                        opt2.setOnMouseExited(event2->{opt2.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                         Button opt3 = new Button("Phone Number");
+                        opt3.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                        opt3.setOnMouseEntered(event2->{opt3.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                        opt3.setOnMouseExited(event2->{opt3.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                         Button opt4 = new Button("Email");
+                        opt4.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                        opt4.setOnMouseEntered(event2->{opt4.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                        opt4.setOnMouseExited(event2->{opt4.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
                         Button opt5 = new Button("Done");
+                        opt5.setStyle("-fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 60px; -fx-pref-height: 15px; -fx-font-size:18px;");
+                        opt5.setOnMouseEntered(event2->opt5.setStyle("-fx-font-size:18px; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-background-color: darkgrey; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;"));
+                       opt5.setOnMouseExited(event2->{opt5.setStyle("-fx-font-size:18px; -fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px;");});
+
                         opt1.setOnAction(event1 -> {
                             Stage nameStage = new Stage();
                             Label currentName=new Label("Current Name is: "+contact.getName()+"\n");
+                            currentName.setStyle("-fx-font-weight: bold; -fx-font-style:italic; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:17px;");
                             Label namelabel1 = new Label("Enter new Name:");
+                            namelabel1.setStyle("-fx-font-weight: bold; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:16px;");
                             TextField nameField1 = new TextField();
                             Button updateButton = new Button("Update");
                             if(!nameField1.getText().isEmpty()){
@@ -156,15 +249,23 @@ public class Main extends Application {
                                     nameStage.close();
                                 });
                             }
-                            VBox vboxname = new VBox(currentName,namelabel1, nameField1, updateButton);
-                            Scene nameScene = new Scene(vboxname, 300, 200);
+                            updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            VBox vboxName=new VBox(10);
+                            vboxName.setStyle("-fx-background-color:yellow;");
+                            vboxName.setAlignment(Pos.CENTER_LEFT);
+                            vboxName.getChildren().addAll(currentName,namelabel1, nameField1, updateButton);
+                            Scene nameScene = new Scene(vboxName, 600, 400);
                             nameStage.setScene(nameScene);
                             nameStage.show();
                         });
                         opt2.setOnAction(event1 -> {
                             Stage surnameStage = new Stage();
                             Label currentSurname=new Label("Current Surname is: "+contact.getLastName()+"\n");
+                            currentSurname.setStyle("-fx-font-weight: bold; -fx-font-style:italic; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:17px;");
                             Label surnamelabel1 = new Label("Enter new Surname:");
+                            surnamelabel1.setStyle("-fx-font-weight: bold; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:16px;");
                             TextField surnameField1 = new TextField();
                             Button updateButton = new Button("Update");
                             if(!surnameField1.getText().isEmpty()){
@@ -173,15 +274,23 @@ public class Main extends Application {
                                     surnameStage.close();
                                 });
                             }
-                            VBox vboxsurname = new VBox(currentSurname,surnamelabel1, surnameField1, updateButton);
-                            Scene surnameScene = new Scene(vboxsurname, 300, 200);
+                            updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            VBox vboxSurname=new VBox(10);
+                            vboxSurname.setStyle("-fx-background-color:yellow;");
+                            vboxSurname.setAlignment(Pos.CENTER_LEFT);
+                            vboxSurname.getChildren().addAll(currentSurname,surnamelabel1, surnameField1, updateButton);
+                            Scene surnameScene = new Scene(vboxSurname, 600, 400);
                             surnameStage.setScene(surnameScene);
                             surnameStage.show();
                         });
                         opt3.setOnAction(event1 -> {
                             Stage phonenumberStage = new Stage();
                             Label currentPhoneNumber=new Label("Current Phone Number is: "+contact.getNumber()+"\n");
+                            currentPhoneNumber.setStyle("-fx-font-weight: bold; -fx-font-style:italic; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:17px;");
                             Label phonenumberlabel1 = new Label("Enter new Phone Number:");
+                            phonenumberlabel1.setStyle("-fx-font-weight: bold; -fx-font-style:italic; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:16px;");
                             TextField phonenumberField1 = new TextField();
                             Button updateButton = new Button("Update");
                             if(!phonenumberField1.getText().isEmpty()){
@@ -190,15 +299,23 @@ public class Main extends Application {
                                     phonenumberStage.close();
                                 });
                             }
-                            VBox vboxphonenumber = new VBox(currentPhoneNumber,phonenumberlabel1, phonenumberField1, updateButton);
-                            Scene phonenumberScene = new Scene(vboxphonenumber, 300, 200);
+                            updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            VBox vboxphonenumber = new VBox(10,currentPhoneNumber,phonenumberlabel1, phonenumberField1, updateButton);
+                            vboxphonenumber.setStyle("-fx-background-color:yellow;");
+                            vboxphonenumber.setAlignment(Pos.CENTER_LEFT);
+                            vboxphonenumber.setStyle("-fx-background-color:yellow;");
+                            Scene phonenumberScene = new Scene(vboxphonenumber, 600, 400);
                             phonenumberStage.setScene(phonenumberScene);
                             phonenumberStage.show();
                         });
                         opt4.setOnAction(event1 -> {
                             Stage emailStage = new Stage();
                             Label currentEmail=new Label("Current Email is: "+contact.getEmail()+"\n");
+                            currentEmail.setStyle("-fx-font-weight: bold; -fx-font-style:italic; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:17px;");
                             Label emaillabel1 = new Label("Enter new Email:");
+                            emaillabel1.setStyle("-fx-font-weight: bold; -fx-text-fill:darkorange; -fx-font-family:'Comic Mans MS'; -fx-font-size:16px;");
                             TextField emailField1 = new TextField();
                             Button updateButton = new Button("Update");
                             if(!emailField1.getText().isEmpty()){
@@ -207,24 +324,31 @@ public class Main extends Application {
                                     emailStage.close();
                                 });
                             }
-                            VBox vboxemail = new VBox(currentEmail,emaillabel1, emailField1, updateButton);
-                            Scene emailScene = new Scene(vboxemail, 300, 200);
+                            updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-font-style:italic; -fx-background-color: darkorange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            updateButton.setOnMouseExited(event2->{updateButton.setStyle("-fx-background-color: orange; -fx-text-fill:white; -fx-font-weight: bold; -fx-font-family:'Comic Mans MS'; -fx-font-size: 17px;");});
+                            VBox vboxemail = new VBox(10,currentEmail,emaillabel1, emailField1, updateButton);
+                            vboxemail.setStyle("-fx-background-color:yellow;");
+                            vboxemail.setAlignment(Pos.CENTER_LEFT);
+                            Scene emailScene = new Scene(vboxemail, 600,400);
                             emailStage.setScene(emailScene);
                             emailStage.show();
                         });
                         opt5.setOnAction(event1 -> {
                             editStage2.close();
                         });
-                        VBox vboxedit2 = new VBox(question, opt1, opt2, opt3, opt4, opt5);
-                        Scene scene2 = new Scene(vboxedit2, 300, 200);
+                        VBox vboxedit2 = new VBox(10,question, opt1, opt2, opt3, opt4, opt5);
+                        vboxedit2.setStyle("-fx-background-color:yellow; -fx-font-size: 17px;");
+                        Scene scene2 = new Scene(vboxedit2, 600,400);
                         editStage2.setScene(scene2);
                         editStage2.show();
                     }
                 }
                 editStage.close();
             });
-            VBox vboxedit = new VBox(editLabel, nameLabel, nameField, surnameLabel, surnameField, enterButton);
-            Scene scene = new Scene(vboxedit, 300, 200);
+            VBox vboxedit = new VBox(5,editLabel, nameBox, surnameBox, enterButton);
+            vboxedit.setStyle("-fx-background-color:yellow;");
+            Scene scene = new Scene(vboxedit, 600,400);
             editStage.setScene(scene);
             editStage.show();
         }
@@ -233,23 +357,35 @@ public class Main extends Application {
     private void showDisplayContactsWindow() {
         Stage displayStage = new Stage();
         displayStage.setTitle("Display Contacts");
-        VBox vboxdisplay = new VBox();
+        VBox vboxdisplay = new VBox(5);
         Button okayButton=new Button("Okay");
         okayButton.setOnAction(event -> {
             displayStage.close();
         });
         if(contacts.isEmpty()){
-            vboxdisplay.getChildren().add(new Label("Your Phonebook is Empty!"));
+            Label emptylabel=new Label("THE PHONEBOOK IS EMPTY!");
+            emptylabel.setStyle("-fx-text-fill: darkblue; -fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 25px;");
+            vboxdisplay.getChildren().add(emptylabel);
             vboxdisplay.getChildren().add(okayButton);
+            okayButton.setStyle("-fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-font-size:18px;");
+            okayButton.setOnMouseEntered(event->okayButton.setStyle("-fx-font-size:18px; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-background-color: darkgrey; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;"));
+            okayButton.setOnMouseExited(event->{okayButton.setStyle("-fx-font-size:18px; -fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px;");});
+            vboxdisplay.setAlignment(Pos.CENTER);
         }else {
             int index = 0;
             for (PhoneContact contact : contacts) {
                 index++;
-                vboxdisplay.getChildren().add(new Label("N" + index + ")\n" + contact.displayContact() + "\n"));
+                Label info=new Label("N" + index + ")\n" + contact.displayContact() + "\n");
+                info.setStyle("-fx-text-fill: darkblue; -fx-font-family: 'Arial Narrow'; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 16px;");
+                vboxdisplay.getChildren().add(info);
             }
+            okayButton.setStyle("-fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-font-size:17px;");
+            okayButton.setOnMouseEntered(event->okayButton.setStyle("-fx-font-size:17px; -fx-pref-width: 70px; -fx-pref-height: 15px; -fx-background-color: darkgrey; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-style: italic;"));
+            okayButton.setOnMouseExited(event->{okayButton.setStyle("-fx-font-size:17px; -fx-background-color: grey; -fx-font-weight:bold; -fx-pref-width: 70px; -fx-pref-height: 15px;");});
             vboxdisplay.getChildren().add(okayButton);
         }
-        Scene scene = new Scene(vboxdisplay, 300, 200);
+        vboxdisplay.setStyle("-fx-background-color:lightblue;");
+        Scene scene = new Scene(vboxdisplay, 600,400);
         displayStage.setScene(scene);
         displayStage.show();
     }
@@ -258,162 +394,3 @@ public class Main extends Application {
         launch(args);
     }
 }
-
-//public class Main {
-//    public static void startScreen(){
-//        System.out.println("1. Add New Contact");
-//        System.out.println("2. Remove Contact");
-//        System.out.println("3. Edit Contact");
-//        System.out.println("4. Display Contacts");
-//        System.out.println("5. Exit");
-//    }
-//    public static void editScreen(){
-//        System.out.println("1. Name");
-//        System.out.println("2. Lastname");
-//        System.out.println("3. Number");
-//        System.out.println("4. Email");
-//    }
-//    public static void main(String[] args) {
-//        Scanner scanner=new Scanner(System.in);
-//        ArrayList<PhoneContact>contacts=new ArrayList<PhoneContact>();
-//        while(true){
-//            startScreen();
-//            int ans=scanner.nextInt();
-//            if(ans==1){
-//                PhoneContact phoneContact=PhoneContact.addPhoneContact();
-//                contacts.add(phoneContact);
-//                System.out.println(phoneContact.getName()+" "+phoneContact.getLastName()+" Has Been Added To The Phonebook!");
-//                System.out.println("---------------------------------------------------------------------------------------");
-//            }else if(ans==2){
-//                PhoneContact.removePhoneContact(contacts);
-//            }else if(ans==3){
-//                if(contacts.isEmpty()){
-//                    System.out.println("Phonebook is Empty! Add Contacts First!");
-//                    System.out.println("---------------------------------------------------------------------------------------");
-//                }else{
-//                    System.out.println("Which Contact Do You Want To Edit?");
-//                    String error=scanner.nextLine();
-//                    System.out.println("Enter The Name: ");
-//                    String name=scanner.nextLine();
-//                    System.out.println(("Enter The Lastname: "));
-//                    String lastName=scanner.nextLine();
-//                    for(int i=0; i<contacts.size(); i++){
-//                        if(name.equals(contacts.get(i).getName()) && lastName.equals(contacts.get(i).getLastName())) {
-//                            System.out.println("What Do You Want To Edit? ");
-//                            editScreen();
-//                            int ans2 = scanner.nextInt();
-//                            String error2 = scanner.nextLine();
-//                            boolean b = true;
-//                            while (b) {
-//                                switch (ans2) {
-//                                    case 1:
-//                                        System.out.println("Enter New Name: ");
-//                                        String newName = scanner.nextLine();
-//                                        contacts.get(i).setName(newName);
-//                                        b = false;
-//                                        break;
-//                                    case 2:
-//                                        System.out.println("Enter New Lastname: ");
-//                                        String newLastName = scanner.nextLine();
-//                                        contacts.get(i).setLastName(newLastName);
-//                                        b = false;
-//                                        break;
-//                                    case 3:
-//                                        System.out.println("Enter New Number: ");
-//                                        String newNumber = scanner.nextLine();
-//                                        contacts.get(i).setNumber(newNumber);
-//                                        b = false;
-//                                        break;
-//                                    case 4:
-//                                        System.out.println("Enter New Email: ");
-//                                        String newEmail = scanner.nextLine();
-//                                        contacts.get(i).setEmail(newEmail);
-//                                        b = false;
-//                                        break;
-//                                    default:
-//                                        System.out.println(ans2 + " is not valid option!");
-//                                        break;
-//                                }
-//                            }
-//                            System.out.println("Contact Edited Successfully!");
-//                            System.out.println("---------------------------------------------------------------------------------------");
-//                        }
-//                    }
-//                }
-//            }else if(ans==4){
-//                if(contacts.isEmpty()){
-//                    System.out.println("Phonebook is Empty!");
-//                }else{
-//                    for(int i=0; i< contacts.size(); i++){
-//                        System.out.println("Contact N"+(i+1)+")");
-//                        System.out.println("Name: "+contacts.get(i).getName());
-//                        System.out.println("Lastname: "+contacts.get(i).getLastName());
-//                        System.out.println("Number: "+contacts.get(i).getNumber());
-//                        System.out.println("Email: "+contacts.get(i).getEmail());
-//                    }
-//                }
-//                System.out.println("---------------------------------------------------------------------------------------");
-//            }else if(ans==5){
-//                System.out.println("Exited Phonebook Successfully!");
-//                break;
-//            }else{
-//                System.out.println(ans+" is not an option!");
-//                System.out.println("---------------------------------------------------------------------------------------");
-//            }
-//        }
-//    }
-//}
-
-
-/*public class Main extends Application {
-    Button button;
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    private static List<String> Colors =  new ArrayList<>(Arrays.asList(
-            "red",
-            "green",
-            "blue",
-            "yellow",
-            "pink",
-            "brown",
-            "purple",
-            "black",
-            "white"));
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Hello");
-
-        button = new Button();
-        button.setText("knopka");
-        button.setStyle("-fx-background-color:red; -fx-fill:white;");
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-
-        AtomicInteger count = new AtomicInteger();
-        button.setOnMouseClicked(mouseEvent -> buttonAction(mouseEvent,count,layout));
-
-        Scene scene = new Scene(layout, 350, 350);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-    }
-
-    private static void buttonAction(MouseEvent event, AtomicInteger count, StackPane layout) {
-        Random rand = new Random();
-        var randomX = rand.nextInt(300) - 150;
-        var randomY = rand.nextInt(300) - 150;
-        var color = Colors.get(rand.nextInt(Colors.size()));
-
-        Button newButton = new Button();
-        newButton.setStyle(String.format("-fx-background-color: %s;",color));
-        newButton.setTranslateX(randomX);
-        newButton.setTranslateY(randomY);
-        count.getAndIncrement();
-        newButton.setText("knopka #" + count);
-        newButton.setOnMouseClicked(mouszxc -> buttonAction(mouszxc,count,layout));
-        layout.getChildren().add(newButton);
-    }
-}*/
